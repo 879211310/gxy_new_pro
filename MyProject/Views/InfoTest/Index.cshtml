@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "信息列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<MyProject.Controllers.SysManage.ViewModels.UserRoleModel>
+<div class="right_box_card">
+    <ul>
+        <li class="right_box_card1"><a href="#">信息列表</a></li>
+    </ul>
+</div> 
+<div>
+    @using (Html.BeginForm("List", "GoodsManage", FormMethod.Get))
+    {
+        <table class="right_box_tab" style="margin-top: 10px;" width="100%" border="0" cellspacing="0"
+            cellpadding="0">
+            <tr>
+                <td>
+                    商品ID：
+                    @Html.TextBox("goodsId", ViewData["goodsId"], new { @class = "tab_input" })
+                </td>
+                <td>
+                    商品名称：
+                    @Html.TextBox("goodsName", ViewData["goodsName"], new { @class = "tab_input" })
+                </td>
+                <td>
+                    商品分类:
+                    @Html.DropDownList("catId", ViewData["CatList"] as List<SelectListItem>)
+                </td>
+                <td>
+                    <input type="submit" value="查找" class="submit" style="float: left; width: 80px;" onclick="this.form.action='@Url.Action("List", "GoodsManage")'" />
+                </td>
+            </tr>
+            <tr style="height:45px">
+                <td colspan="3" style="text-align: right; padding-right:20px">
+                    导出数量：@Html.TextBox("totalCount", 100000, new { @class = "tab_input" })
+                </td>
+                <td>
+                   <input type="submit" value="导出Excel" class="submit" id="btnToExcel" style="float: left; width: 80px;" onclick="this.form.action='@Url.Action("ListToExcel", "GoodsManage")'"/>
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<table class="right_box_tab" style="margin-top: 10px;" width="100%" border="0" cellspacing="0"
+    cellpadding="0">
+    <tr height="30" class="tab_title">
+        <td>
+            信息ID
+        </td>
+        <td>
+            姓名
+        </td>
+        <td>
+            年龄
+        </td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr height="35" class="tab_td1" style="line-height: 26px;" onmouseover="this.className = 'tab_td2' "
+            onmouseout=" this.className = 'tab_td1'">
+            <td>
+                @item.RoleId
+            </td>
+            <td>
+                @item.RoleName
+            </td>
+            <td>
+                @Html.ActionLink("修改", "SaveRole", "SysManage", new { item.RoleId }, null)
+            </td>
+        </tr>
+    }
+</table>
+<div style="line-height: 40px;">
+    <p class="avatar_btn">
+        <a href="@Url.Action("SaveRole", "SysManage")" class="box" id="lnkAdd">新增信息</a>
+    </p>
+</div> 
