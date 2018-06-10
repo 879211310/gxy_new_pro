@@ -55,6 +55,12 @@ namespace MyProject.Controllers.Account
             return RedirectToAction("LogOn", "Account");
         }
 
+
+        public ActionResult NewLogOn()
+        {
+            var model = new LogOnModel();
+            return View(model);
+        }
         
     }
 }
